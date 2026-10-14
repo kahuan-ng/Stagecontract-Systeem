@@ -1,0 +1,63 @@
+@model WSI.Goat.InternshipContracts.Web.Areas.Supervisor.ViewModels.SupervisorIndexViewModel
+
+<div class="container mt-4">
+    
+    <div class="text-center mb-5">
+        <h4 class="fw-bold">Welkom, @Model.SupervisorName</h4>
+    </div>
+
+    <div class="card-field rounded-0 p-4 p-md-5">
+    @if (!Model.Contracts.Any())
+    {
+        <div class="alert card-field c-red text-uppercase fw-bolder">
+            Je hebt momenteel nog geen studenten die een stagecontract opgesteld hebben voor jou organisatie.
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-striped table-hover align-middle card-cel">
+                <thead class="table-dark">
+                <tr>
+                    <th>Periode</th>
+                    <th>Contract</th>
+                    <th>Student</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                
+                <tbody>
+                    @foreach (var contract in Model.Contracts)
+                    {
+                        <tr class="form-tr">
+                            <td>
+                                @contract.StartDate.ToString("dd/MM/yyyy") - @contract.EndDate.ToString("dd/MM/yyyy")
+                            </td>
+                            <td>
+                                <a asp-action="CompleteContract" 
+                                   asp-route-id="@contract.ContractId"
+                                   class="d-block fw-bolder text-dark text-decoration-underline h6 m-0">
+                                    @contract.InternshipContractName
+                                </a>
+                            </td>
+                            <td>
+                                @contract.StudentName
+                            </td>
+                            <td>
+                                @if (contract.SupervisourIsSigned)
+                                {
+                                    <span class="card-badge c-green">Getekend</span>
+                                }
+                                else
+                                {
+                                    <span class="card-badge c-red">Nog te tekenen</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    </div>
+</div>

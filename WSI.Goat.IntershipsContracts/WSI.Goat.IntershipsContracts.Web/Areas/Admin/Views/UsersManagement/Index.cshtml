@@ -1,0 +1,73 @@
+﻿@model UsersManagementIndexViewModel
+
+@{
+    ViewData["Title"] = "Gebruikersbeheer";
+}
+
+<div class="container mt-5 mb-5">
+    <div class="text-center mb-5">
+        <h1 class="display-3 fw-black fw-bolder text-uppercase mb-2">
+            @ViewBag.Title
+        </h1>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-12">
+            <div class="bg-white card-field rounded-0">
+                
+                <div class="d-flex flex-column flex-md-row justify-content-between gap-4 mb-4">
+                    <a class="btn card-button-badge fw-bold text-uppercase py-3 px-4 text-center text-decoration-none rounded-0"
+                       asp-area="Admin"
+                       asp-controller="Admin"
+                       asp-action="Index">
+                        Terug naar dashboard
+                    </a>
+                    
+                    <a class="btn card-button-badge fw-bold text-uppercase py-3 px-4 text-center text-decoration-none rounded-0"
+                       asp-action="Create">
+                        Gebruiker aanmaken
+                    </a>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered border-3 border-dark mb-0 align-middle text-dark rounded-0">
+                        <thead class="c-yellow text-uppercase">
+                            <tr class="border-bottom border-3 border-dark">
+                                <th class="py-3 px-4 fw-bold mb-0 text-dark border-end border-3 border-dark">Functie</th>
+                                <th class="py-3 px-4 fw-bold mb-0 text-dark border-end border-3 border-dark">Voornaam</th>
+                                <th class="py-3 px-4 fw-bold mb-0 text-dark border-end border-3 border-dark">Achternaam</th>
+                                <th class="py-3 px-4 fw-bold mb-0 text-dark border-end border-3 border-dark">Email</th>
+                                <th class="py-3 px-4 fw-bold mb-0 text-dark text-center" style="width: 150px;">Acties</th>
+                            </tr>
+                        </thead>
+                        <tbody class="fw-bold">
+                            @foreach (var user in Model.Users
+                                .OrderBy(u => !string.IsNullOrEmpty(u.Function) && (u.Function.StartsWith("Coördinator", StringComparison.OrdinalIgnoreCase) || u.Function.StartsWith("Coordinator", StringComparison.OrdinalIgnoreCase)) ? "Coördinator" : (string.IsNullOrWhiteSpace(u.Function) ? "Z Geen Functie" : u.Function))
+                                .ThenBy(u => u.LastName))
+                            {
+                                <tr class="border-bottom border-3 border-dark">
+                                    <td class="py-3 px-4 border-end border-3 border-dark">
+                                        <span class="text-uppercase small">
+                                            @(!string.IsNullOrEmpty(user.Function) && (user.Function.StartsWith("Coördinator", StringComparison.OrdinalIgnoreCase) || user.Function.StartsWith("Coordinator", StringComparison.OrdinalIgnoreCase)) ? "Coördinator" : (string.IsNullOrWhiteSpace(user.Function) ? "Geen Functie" : user.Function))
+                                        </span>
+                                    </td>
+                                    <td class="py-3 px-4 border-end border-3 border-dark">@user.FirstName</td>
+                                    <td class="py-3 px-4 border-end border-3 border-dark">@user.LastName</td>
+                                    <td class="py-3 px-4 text-break border-end border-3 border-dark">@user.Email</td>
+                                    <td class="py-3 px-4 text-center">
+                                        <a class="btn card-button-badge btn-sm fw-bold text-uppercase py-2 px-3 text-center text-decoration-none d-inline-block rounded-0"
+                                           asp-action="Edit"
+                                           asp-route-id="@user.Id">
+                                            Bewerken
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

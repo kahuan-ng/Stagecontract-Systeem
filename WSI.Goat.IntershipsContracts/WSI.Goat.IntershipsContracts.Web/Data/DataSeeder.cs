@@ -1,0 +1,531 @@
+﻿
+using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.Contracts;
+using WSI.Goat.InternshipContracts.Core.Entities;
+using WSI.Goat.IntershipsContracts.Core.Entities; 
+
+namespace WSI.Goat.InternshipsContracts.Web.Data
+{
+    public static class DataSeeder
+    {
+        public static void Seeder(ModelBuilder modelbuilder)
+        {
+            var seedDate = new DateTime(2026, 5, 13);
+
+            var selectStartDate = "";
+            var selectEndDate = "";
+            
+            var studentRoleId = new Guid("00000000-0000-0000-0000-000000000001");
+            var mentorRoleId = new Guid("00000000-0000-0000-0000-000000000002");
+            var supervisorRoleId = new Guid("00000000-0000-0000-0000-000000000003");
+            var coordinatorRoleId = new Guid("00000000-0000-0000-0000-000000000004");
+            var adminRoleId = new Guid("00000000-0000-0000-0000-000000000005");
+            
+            var socialClusterId = new Guid("00000000-0000-0000-1111-000000000001");
+            
+            var adminUserId = new Guid("10000000-0000-0000-0000-000000000000");
+            
+            var azOostendeUserId = new Guid("10000000-0000-0000-0000-000000000001");
+            var azSintLucasUserId = new Guid("10000000-0000-0000-0000-000000001111");
+            
+            var anneliesUserId = new Guid("10000000-0000-0000-0000-000000000002");
+            var kimUserId = new Guid("10000000-0000-0000-0000-000000000003");
+            var kristienUserId = new Guid("10000000-0000-0000-0000-000000000004");
+            var annUserId = new Guid("10000000-0000-0000-0000-000000000005");
+            
+            var bartSoeteId = new Guid("10000000-0000-0000-0000-000000000006");
+            var miletoDiMarcoId = new Guid("10000000-0000-0000-0000-000000000011");
+            
+            var dylanUserId = new Guid("10000000-0000-0000-0000-000000000007");
+            var kahuanUserId = new Guid("10000000-0000-0000-0000-000000000008");
+            
+            var applicationRoles = new ApplicationRole[]
+            {
+                new () { Id = studentRoleId, BaseName = "Student", Created = seedDate },
+                new () { Id = mentorRoleId, BaseName = "Mentor", Created = seedDate },
+                new () { Id = supervisorRoleId, BaseName = "Supervisor", Created = seedDate },
+                new () { Id = coordinatorRoleId, BaseName = "Coordinator", Created = seedDate },
+                new () { Id = adminRoleId, BaseName = "Admin", Created = seedDate }
+            };
+
+            var applicationUsers = new ApplicationUser[]
+            {
+                new()
+                {
+                    Id = adminUserId,
+                    BaseName = "admin.admin", FirstName = "Admin", LastName = "Admin",
+                    Email = "admin@howest.be", Password = "WW123",
+                    TelephoneNumber = "/",
+                    Function = "Administrator", ApplicationRoleId = adminRoleId,
+                    Created = seedDate
+                },
+                
+                new() 
+                { 
+                    Id = azOostendeUserId, 
+                    BaseName = "az.oostende", FirstName = "AZ", LastName = "Oostende", 
+                    Email = "info@azoostende.be", Password = "WW123",
+                    TelephoneNumber = "050 33 32 11",
+                    Function = "Supervisor stageplaats", ApplicationRoleId = supervisorRoleId,
+                    Created = seedDate
+                },
+                
+                new()
+                {
+                    Id = azSintLucasUserId, 
+                    BaseName = "az.sint.lucas", FirstName = "AZ", LastName = "Sint Lucas", 
+                    Email = "info@azsintlucas.be", Password = "WW123",
+                    TelephoneNumber = "050 33 11 11",
+                    Function = "Supervisor stageplaats", ApplicationRoleId = supervisorRoleId,
+                    Created = seedDate
+                },
+                
+                new() 
+                { 
+                    Id = anneliesUserId, 
+                    BaseName = "annelies.marechal", FirstName = "Annelies", LastName = "Marechal", 
+                    Email = "annelies.marechal@howest.be", Password = "WW123",
+                    TelephoneNumber = "0497 27 49 81",
+                    Function = "Stagecoördinator MW", ApplicationRoleId = coordinatorRoleId,
+                    Created = seedDate
+                },
+                new() 
+                { 
+                    Id = kimUserId, 
+                    BaseName = "kim.maes", FirstName = "Kim", LastName = "Maes", 
+                    Email = "kim.maes@howest.be", Password = "WW123",
+                    TelephoneNumber = "+32 476 248434",
+                    Function = "Stagecoördinator TP", ApplicationRoleId = coordinatorRoleId, 
+                    Created = seedDate
+                },
+                new() 
+                { 
+                    Id = kristienUserId, 
+                    BaseName = "kristien.degroof", FirstName = "Kristien", LastName = "De Groof", 
+                    Email = "kristien.de.groof@howest.be", Password = "WW123",
+                    TelephoneNumber = "0474 72 98 63",
+                    Function = "Stagecoördinator Ortho", ApplicationRoleId = coordinatorRoleId,
+                    Created = seedDate
+                },
+                new() 
+                { 
+                    Id = annUserId, 
+                    BaseName = "ann.valcke", FirstName = "Ann", LastName = "Valcke", 
+                    Email = "ann.valcke@howest.be", Password = "WW123",
+                    TelephoneNumber = "0478 75 79 22",
+                    Function = "Stagecoördinator SW", ApplicationRoleId = coordinatorRoleId, 
+                    Created = seedDate
+                },
+                
+                new() 
+                { 
+                    Id = bartSoeteId, 
+                    BaseName = "bart.soete", FirstName = "Bart", LastName = "Soete", 
+                    Email = "bart.soete@azoostende.be", Password = "WW123",
+                    TelephoneNumber = "0455 11 22 33",
+                    Function = "Stagementor", ApplicationRoleId = mentorRoleId,
+                    Created = seedDate
+                },
+                
+                new() 
+                { 
+                    Id = miletoDiMarcoId, 
+                    BaseName = "mileto.dimarco", FirstName = "Mileto", LastName = "Di Marco", 
+                    Email = "mileto.dimarco@azoostende.be", Password = "WW123",
+                    TelephoneNumber = "0455 11 22 11",
+                    Function = "Stagementor", ApplicationRoleId = mentorRoleId,
+                    Created = seedDate
+                },
+                
+                new() 
+                { 
+                    Id = dylanUserId, 
+                    BaseName = "dylan.hourez", FirstName = "Dylan", LastName = "Hourez", 
+                    Email = "dylan.hourez@student.howest.be", Password = "WW123",
+                    TelephoneNumber = "0466 44 55 66",
+                    Function = "Student", ApplicationRoleId = studentRoleId,
+                    Created = seedDate
+                },
+                
+                new() 
+                { 
+                    Id = kahuanUserId, 
+                    BaseName = "kahuan.ng", FirstName = "Kahuan", LastName = "Ng", 
+                    Email = "kuahan.ng@student.howest.be", Password = "WW123",
+                    TelephoneNumber = "0466 44 55 90",
+                    Function = "Student", ApplicationRoleId = studentRoleId, 
+                    Created = seedDate
+                }
+            };
+
+            var clusters = new Cluster[]
+            {
+                new () { Id = socialClusterId, BaseName = "Sociaal Agogisch Werk", SupervisorId =  azSintLucasUserId, Created = seedDate }
+            };
+
+            var departments = new Department[]
+            {
+                new ()
+                {
+                    Id = new Guid("20000000-0000-0000-0000-000000000000"),
+                    BaseName = "Maatschappelijk Werk",
+                    ClusterId = socialClusterId,
+                    StageCoordinatorId = anneliesUserId,
+                    Location = "Kortrijk",
+                    Created = seedDate
+                },
+                new ()
+                {
+                    Id = new Guid("20000000-0000-0000-0000-000000000001"),
+                    BaseName = "Toegepaste Psychologie",
+                    ClusterId = socialClusterId,
+                    StageCoordinatorId = kimUserId,
+                    Location = "Brugge",
+                    Created = seedDate
+                },
+                new ()
+                {
+                    Id = new Guid("20000000-0000-0000-0000-000000000002"),
+                    BaseName = "Orthopedagogische Begeleiding",
+                    ClusterId = socialClusterId,
+                    StageCoordinatorId = kristienUserId,
+                    Location = "Kortrijk",
+                    Created = seedDate
+                },
+                new ()
+                {
+                    Id = new Guid("20000000-0000-0000-0000-000000000003"),
+                    BaseName = "Sociaal Werk",
+                    ClusterId = socialClusterId,
+                    StageCoordinatorId = annUserId,
+                    Location = "Kortrijk",
+                    Created = seedDate
+                }
+            };
+
+            var internshipOrganisations = new StageOrganization[]
+            {
+                new StageOrganization()
+                {
+                    Id = new Guid("22222222-2222-2222-2222-222222222222"),
+                    BaseName = "AZ Oostende",
+                    OrganizationNumber = "BE 0800.023.336",
+                    Street = "Gouwelozestraat",
+                    Number = 10,
+                    PostalCode = "8400",
+                    Municipality = "West-Vlaanderen",
+                    RepresentativeId = azOostendeUserId,
+                    InternshipContracts = new List<InternshipContract>(),
+                }
+            };
+
+            var articles = new Article[]
+            {
+                new Article()
+                {
+                    Id = new Guid("00000000-9999-9999-9999-000000000000"),
+                    Title = "Artikel 1 - Periode en duur",
+                    Description = $@"1.1 De stage vindt plaats binnen de periode van {selectStartDate} tot en met {selectEndDate} De Stagehandleiding vermeldt de exacte duur van het aantal stagedagen en/of -weken.
+                    1.2 In geval van afwezigheid van de Student wegen ziekte of overmacht kan de stageperiode verlengd worden. Deze verlenging dient schriftelijk te worden overeengekomen tussen Howest en de Stagegever, waarbij de nieuwe einddatum van de stage duidelijk wordt vastgelegd.
+                    1.3 De Stagegever aanvaardt dat de Student tijdens de stageperiode voor een aantal contactmomenten op Howest kan verwacht worden.",
+                },
+                new Article()
+                {
+                    Id = new Guid("00000000-9999-9999-9999-000000000001"),
+                    Title = "Artikel 2 - Werktijden en werkplaats",
+                    Description = @"2.1 De stagegever bepaalt de werktijden in onderling overleg met de Student. Deze werktijden worden vastgesteld met inachtneming van de geldende arbeidsreglementering en, indien van toepassing, de sectorale bepalingen inzake arbeidsduur en arbeidsomstandigheden.
+                    2.2 Indien er tussen de Stagegever and de Student een arbeidsovereekomst lopende is, dan respecteert de Student-werknemer de werktijden van de Stagegever-werkgever zoals aagegeven in de arbeidsovereenkomst en/of het arbeidsreglement.
+                    2.3 De Stagegever voorziet een aangepaste werkplek op de stageplaats, zoals vermeld in de aanhef van deze Overeenkomst.
+                    2.4 Indien het adres van de stageplaats (ocasioneel) wijzigt (met inbegrip van telewerk), zal de Stagegever dit binnen een redelijke termijn vooraf schriftelijk melden aan de Student en aan de Stagebegeleider.
+                    In geval van (gedeeltelijk) telewerk meldt de Student schriftelijk aan zowel de Stagementor als de Stagebegeleider op welke locatie de stage-activiteiten bij telewerk uitgevoerd worden en hoe de Student bereikbaar is voor de Stagegever. Op her uurrooster wordt aangeduid wanneer telewerk toegepast wordt.
+                    Indien (een deel van) de stage wordt uitgevoerd op een locatie die niet onder de verantwoordelijkheid van de Stagegever valt, is hiervoor voorafgaand uitdrukkelijk en schriftelijk akkoord vereis van de Partijen."
+                },
+                new Article()
+                {
+                    Id = new Guid("00000000-9999-9999-9999-000000000002"),
+                    Title = "Artikel 3 - Taken en Verantwoordelijkheden",
+                    Description = @"3.1 De Student zal zich richten op de vermelde taken in de omschrijving die als bijlage aan deze Overeenkomst toegevoegd wordt. De Student en de Stagementor zullen er gezamenlijk over waken dat de taken aansluiten bij de leerdoelen van de stage. Indien de Student vaststelt dat de toegewezen taken hiervan (dreigen te) afwijken, brendt de Student dit tijdig ter kennis van de Stagebegeleider.
+                    3.2 De Student verbindt zich ertoe zich volledig in te zetten voor de Stagegever en zijn belangen naar best vermogen te behartigen.
+                    3.3 De Stagegever verbindt zich ertoe de geldende arbeidsreglementering binnen de sector na te leven, voor zover deze van toepassing is op stagiaris.
+                    De nationale wetgeving omtrent welzijn, veiligheid en gezondheid op het werk is integraal van toepassing op de stage. De Stagegever past de bepalingen van de Welzijnswet van 4 augustus 1996 toe, evenals titel 4 van boek X van de Codex over het welzijn op het werk en alle andere relevante regelgeving. Overeenkomstig titel 4 in het boek X van de Codex over het welzijn op her werk neemt de Stagegever volgende verplichtingen in acht:
+                    - De Stagegever voert een voorafgaande analyse uit van de risico's waaran de Student kan worden blootgesteld en stelt de preventiemaatregelen vast die in acht moeten genomen worden. De resultaten vermelden in het bijzonder of een gezondheidstoezicht nodig is en, in voorkomend geval, de aard van de verplichte inetingen/onderzoeken.
+                    - De Stagegever bezorgt de resultaten van deze risicoanalyse ten minste voor de aanvang van de stage aan Howest, en bij voorkeur uiterlijk twee weken op voorhand, zodat eventueel noodzakelijk gezongheidstoezicht tijdig kan georganiseerd worden. De risicoanalyse wordt in bijlage gevoegd en maakt integraal deel uit van de Overeenkomst.
+                    - Wanneer uit de risicoanalyse blijkt dat de Student wordt tewerkgesteld in een activiteit waarvoor een type van gezondheidstoezicht van toepassing is, dan wordt het gezondheidstoezicht:
+                      1) ofwel uitgevoerd door de interne of externe dienst voor preventie en bescherming op het werk van de Stagegever. Bovendien onderwerpt de Stagegeven de Student, voorkomend geval, aan de inentingen/bijkomende onderzoeken;
+                      2) ofwel, enkel bij stagen van ten minste 30 kalendardagen en in opdracht van de Stagegever, uitgevoerd door de externe dienst voor preventie en bescherming op het werk van Howest. Bovendien onderwerpt Howest de Student, in voorkomend geval, aan de inentingen/bijkomende onderzoeken;
+                    - voor aanvang van de stage bewijst de Student ten aanzien van de Stagegever dat voldaan werk aan de gestelde eisen van de risicoanalyse.
+                    3.4 De persoonlijke beschermingsmiddelen die nodig zijn tijdens de uitvoering van de stage worden aan de Student kosteloos ter beschikking gesteld door de Stagegever.
+                    3.5 Indien er in het kader van de stage structureel contact (opvoeding, hulpverlening of begeleiding) met mindejarigen is, is de controle van een uittreksel uit het strafregister model 596.2 verplicht voor de ondertekening van de Stageovereenkomst. De uittreksel mag maximaal een maand oud zijn op het moment van voorlegging. De Student moet minstens onberispelijk gedrag vertonen en in de omgang met minderjarigen. Het uittreksel wordt door de Student zelf opgevraagd en bezorgd aan de Stagegever. Het niet voldoen aan deze vereiste kan aanleiding geven tot weigering of stopzetting van de stage."
+                },
+                new Article()
+                {
+                    Id = new Guid("00000000-9999-9999-9999-000000000003"),
+                    Title = "Artikel 4 - Begeleiding en evaluatie",
+                    Description= @"4.1 De Stagementor die door de Stagegever aangeduid wordt, zoals voornoemd in de aanhef van deze Overeenkomst, begeleidt de Student en ziet toe op her verloop van de stage.
+                    4.2 De Stagebegeleider die door Howest aangeduid wordt, volgt de stage op en legt daartoe de nodige contacten met de Stagementor.
+                    4.3 De evaluatie van de stage gebeurt op een objectieve manier. Howest is verantwoordelijk voor de eindbeoordeling van de stage and zal het eindcijfer bepalen. Daarbij houdt zij rekening met de beoordeling en/of het advies van de Stagementor. De evaluatie gebeurt op basis van de evaluatiecriteria zoals beschreven in de Stagehandleiding. De evaluatiecriteria en evaluatiemomenten worden bij de aanvang van de stage via Stagehandleiding gecomuniceerd."
+                },
+                new Article()
+                {
+                    Id = new Guid("00000000-9999-9999-9999-000000000004"),
+                    Title = "Artikel 5 - Afwezigheden",
+                    Description= @"5.1 Bij afwezigheid door ziekte of overmacht verwittigt de Student ogenblikkelijk zowel de Stagementor als de Stagebegeleider. Tevens bezorgt de Student binnen de vijf kalenderdagen een schriftelijk bewijs aan het Studentensecretariaat van Howest.
+                    5.2 Ekle afwezigheid waarvan geen kennis wordt gegeven door de Student, wordt door de Stagegever aan Howest gemeld.
+                    5.3 In geval van afwezigheid door ziekte of overmacht kan de stageperiode desgevallend verlengd worden overeenkomstig artikel 1 van deze Overeenkomst."
+                },
+                new Article()
+                {
+                    Id = new Guid("00000000-9999-9999-9999-000000000005"),
+                    Title = "Artikel 6 - Vergoeding en onkosten",
+                    Description=@"6.1 De uitvoering van de stage is onbezoldigd.
+                    6.2 Een eventuele terugbetaling van woon-werkverkeer of andere onkosten is enkel mogelijk na voorafgaand schriftelijk akkoord van de Stagegever. Enkel onkosten gemaakt in het kader van de uitvoering van de stage en waarvoor de Student vooraf het schriftelijk akkoord verkregen heeft van de Stagegever, kunnen desgevallend door de Stagegever vergoed worden. De verdere regeling omtrent terugbetaling, inclusief het aanleveren van bewijsstukken, gebeurt in onderling overleg tussen de Student en de Stagegever. Deze onkostenvergoeding mag geen afbreuk doen aan het onbezoldig karakter van de stage.
+                    6.3 Tijdens de duur van de stage behoudt de Student het statuut van student aan Howest. Er ontstaat geen arbeidsovereenkomst tussen de Student en de Stagegever.
+                    6.4 Indien er tussen de Stagegever en de Student een arbeidsovereenkomst lopende is, dan schorst de Stageovereenkomst de arbeidsovereenkomst niet. De bezoldiging die in her kader van de arbeidsovereenkomst betaald wordt, doet geen afbreuk aan het onbezoldigd karakter van de Stageovereenkomst."
+                },
+                new Article()
+                {
+                    Id = new Guid("00000000-9999-9999-9999-000000000006"),
+                    Title = "Artikel 7 - Deontologie en geheimhouding",
+                    Description = @"7.1 De Partijen erkennen uitdrukkelijk de verplichting inzake beroepsgeheim, waarbij de betrokken Partijen gehouden zijn het beroepsgeheim, eigen aan de sector waarin de stage wordt volbracht, te eerbiedingen en zich te onthouden van enigerlei handeling die de goede naam of de bedrijvigheid van de Stagegever zou kunnen schaden, en dit zowel tijdens de stage als na afloop van de stage.
+                    7.2 De betrokken Partijen zijn verplicht tot geheimhouding van volgende informatie waarvan zij tijdens of naar aanleiding van de uitvoering van de stage kennisnemen: vertrouwelijke patiënten-, klanten- en personeelsgegevens, bedrijfskundige gegevens, financiële informatie, fabricage- en werkmethodes, therapie- en zorgschema's, strategische plannen, interne rapporten, software en technische informatie die behoren tot de werking of knowhow van de Stagegever. Daarnast geldt de geheimhoudingsplicht ook voor de informatie die door de Stagegever uitdrukkelijk en schriftelijk als vertrouwelijk aan de Student is meegedeeld.
+                    7.3 Vertrouwelijke informatie blijft te allen tijde de eingendom van de Stagegeven en mag uitsluitend worden gebruikt in het kader van de uitvoering van de stage. De student mag deze informatie niet delen met derden, behoudens voorafgaande schriftelijk toestemming van de Stagegever. Bij beëindiging van de stage verbindt de Student zich ertoe om op verzoek van de Stagegever alle vertrouwelijke documenten of gegevens(dragers), evenals andere informatie of middelen die uitdrukkelijk worden opgevraagd, ter vernietigen of terug te bezorgen.
+                    7.4 Een uitzondering op het verbod tot verspreiding geldt voor de Stagebegeleider van Howest en - in het geval van een eindwerk - de ledenn van de jury, voor zover deze op de hoogte moeten zijn van vertrouwelijke informatie in het kader van een adequate begeleiding of beoordeling van de Student. Howest verbindt zich ertoe dat zowel de Stagebegeleider als de juryleden gehouden zijn tot geheimhouding met betrekking tot deze informatie.
+                    7.5 Indien de Student vertrouwelijke informatie van de Stagegever wenst te verwerken in een verslag, presentatie of ander werk dat publiek wordt gedeeld of verdedigd, dient het ontwerpwerk minstens tien kalenderdagen voor de voorziene publicatie of indiening voorgelegd te worden aan de Stagementor.
+                    7.6 De Stagementor kan, als vertegenwoordiger van de Stagegever, binnen Microsoft kalenderdagen na ontvangst van het ontwerpwerk gemotiveerde bemerkingen formuleren of vragen om vertrouwelijke informatie te verwijderen. Indien er binnen die termijn geen bemerkingen worden geformuleerd, wordt het werkt geacht in zijn goedgekeurd. In geval van betwisting treedt de Stagebegeleider of Stagecoördinator van Howest op als bemiddelaar om tot een oplossing te komen.
+                    7.7 De Student stemt erin toe dat Howest en de Stagegever informatie uitwisselen voor de begeleiding en de evaluatie van de Student. De Stagegever verbindt zich tot een discretieplicht omtrent alle informatie die hij over de Student verneemt, en dit zowel tijdens de stage als na afloop van de stage.
+                    7.8 De geheimhoudingsverplichtingen opgenomen in dit artikel gelden tijdens de stagen en blijven gelden gedurende een periode van drie jaar na afloop van de stage, tenzij het vertrouwelijke karakter van de informatie op grond van de aard of context kennelijk een langere bescherming vereist. In dit laatste geval vervalt de geheimhouding wanneer de betreffende informatie openbaar is geworden of haar vertrouwelijk karakter heeft verloren.
+                    7.9 De Partijen, waaronder uitdrukkelijk begrepen de Stagegever, de Student en Howest (inclusief de Stagebegeleider og andere betrokken personeelsleden), erkennen dat de bepalingen in dit artikel gelden als een bindende regeling inzake vertrouwelijkheid en geheimhouding. Dit artikel heeft, wat betreft de geheimhoudingsverplichtingen, het juridische effect van een geheimhoudingsovereenkomst (NDA). Er zullen geen afzonderlijke NDA's ondertekend worden noch door de Student, noch door (personeelsleden van) Howest."
+                },
+                new Article()
+                {
+                    Id = new Guid("00000000-9999-9999-9999-000000000007"),
+                    Title = "Artikel 8 - Verzekering en Aansprakelijkheid",
+                    Description = @"8.1 Verzekering lichamelijke ongevallen: gedurende de uitvoering van deze Overeenkomst is de Student verzekerd door Howest voor lichamelijke ongevallen tijdens de stage en op weg van en naar de stageplaats via de polis arbeidsongevallen of de schoolverzekering, binnen de waargorgen van deze polissen.
+                    8.2 Burgelijke aansprakelijkheid: overeenkomstig artikel II.355/1 van de Codex Hoger Onderwijks is de Stagegever aansprakelijk voor de schade die wordt veroorzaakt door een toevallige lichte schuld van de Student bij de uitvoering van de stage.
+                    De Student is persoonlijk aansprakelijk voor bedrog, zware schuld en lichte schuld wanneer die lichte schuld eerder gewoonlijk dan toevallig voorkomt.
+                    De Stagegever ziet erop toe dat de Student de opgedragen taken correct uitvoert zodat de Student eventuele fouten kan rechtzetten alvorens er schade ontstaat. Het is de verantwoordelijkheid van de Stagegever om zich desgevallend te verzekeren voor schadegevallen waarbij de Student betrokken kan zijn tijdens de uitvoering van de stage. Gebruik van voertuigen en schade aan materialen: voertuigen worden in geen enkel geval door Howest verzekerd.
+                    8.3 Ook schade aan materialen en voorwerpen, opgelopen tijdens een eventueel transport, wordt niet vezekerd door Howest.
+                    8.3.1 lichamelijke schade
+                    - Lichamelijke schade aan de student zelf ten gevolge van een ongeval tijdens het woon-werkverkeer, w.w.z. tijdens de verplaatsing van en naar de stageplaats, is verzekerd via de schoolverzekering van Howest. De lichamelijke schade aan de Student zelf ten gevolge van een ongeval tijdens de stage is verzekerd via de verzekering studentstage van Howest.
+                    - Lichamelijke schade aan een inzittende is verzekerd via de polis van het voertuig.
+                    - Bij een ongeval ligt de bewijslast steeds bij het slachtoffer. De Student of de inzittende zal moeten aantonen dat het ongeval gebeurd is van of naar de stage, of tijdens en door de deelname aan een activiteit in het kader van de stage in opdracht of met akkoord van de Stagegever.
+                    8.3.2 Materiële schade
+                    - Materiële schaden aan het voertuig (of materialen en voorwerpen die zich in het voertuig bevinden) van de Student tijdens de verplaatsing van en naar de stageplaats waarbij:
+                      -- De Student bij her ongeval in fout is: de verzekering van Howest kan dit nooit aangesproken worden. Enkel de verzekering van het voertuig van de Student wordt aangesproken voor de (materiële en lichamelijke) schade aan de tegenpartij. De schade aan het voertuig van de Student is voor de Student zelf.
+                      -- De tegenpartij bij het ongeval in fout is: de verzekering van Howest kan nooit aangesproken worden. De verzekering van de tegenpartij wordt aangesproken.
+                    - Materiële schade aan het voertuig (of materialen en voorwerpen die zich in het voertuig bevinden) van de Student tijdens een dienstverplaatsing in het kader van de stage (dit kan nooit in opdracht zijn van Howest):
+                      -- De Student moet voor het rijden met hun voertuig op dezelfde manier verzekerd worden als de medewerkers van de Stagegever. Dit moet op voorhand duidelijk en schriftelijk geregeld en gecommuniceerd worden door de Stagegever, waarbij het onder meer duidelijk moet zijn of de auto van de Student al dan niet omnium verzekerd is tijdens de verplaatsing en wie de eventuele franchise zal dragen. De Student mag niet verplicht worden met hun eigen voertuig te rijden. Dit kan geen beletsel zijn voor de uitvoering van de stage.
+                      -- De Student is bij her ongeval fout: de verzekering van Howest kan nooit aangesproken worden. De verzekering van het voertuig van de Student wordt aangesproken voor de (materiële en lichamelijke) schade aan de tegenpartij. De schade aan het voertuig van de Student wordt geregeld zoals op voorhand en schriftelijk overeengekomen met de Stagegever.
+                      -- De tegenpartij is bij het ongeval in fout: de verzekering van Howest kan nooit aangesproken worden. De verzekering van de tegenpartij wordt aangesproken.
+                    - Materiële schade aan een bedrijfsvoertuig:
+                      -- In het geval de Student tijdens hun stage met een bedrijfsvoertuig van de Stagegever rijdt, moet de Student voor het rijden met een bedrijfsvoertuig op dezelfde manier verzekerd worden als de medewerkers van de Stagegever. Dit moet op voorhand duidelijk en schriftelijk geregeld en gecommuniceerd worden door de Stagegever, waarbij onder meer duidelijk moet afgesproken worden wie de eventuele franchise zal dragen.
+                      -- De student is bij het ongeval in fout: de verzekering van Howest kan nooit aangesproken worden. De verzekering van het bedrijfsvoertuig wordt aangesproken voor de (materiële en lichamelijke) schade aan de tegenpartij. De schade aan het bedrijfsvoertuig wordt geregeld via de verzekering van het bedrijfsvoertuig en zoals op voorhand en schriftelijk overeengekomen met de Stagegever.
+                      -- De tegenpartij is bij het ongeval in fout: de verzekering van Howest kan nooit aangesproken worden. De verzekering van de tegenpartij wordt aangesproken.
+                    8.4 Toevertrouwde goederen: in de schoolverzekering is een dekking voor toevertrouwde goederen in het kader van stages opgenomen ter waarde van 75.000,00 Euro. De schade door diefstal, verduistering, bedrog of misbruik van vertrouwens is niet gedekt. Voor deze schade kan Howest niet aansprakelijk gesteld worden.
+                    8.5 Dekking onder voorbehoud: iedere dekking van schade door (de verzekeraar van) Howest is steeds onder voorbehoud van de aanvaarding door de verzekeraar op basis van de polisvoorwaarden en algemene voorwaarden.
+                    8.6 Aangifte: de Student meldt elk ongeval/schadegeval dat zich voordoet tijdens (de weg van of naar) de stage binnen de 24 uur:
+                    - Aan de verzekeringsdienst van Howest, via het online aangifteformulier op de Howest site : http://www.howest.be/aangifteongevallenstudenten;
+                    - Aan de Stagebegeleider van Howest;
+                    - Aan de Stagementor van de Stagegever.
+                    Alle documenten, attesten, enz. met betrekking tot verzekeringen, aangiftes van ongevallen, enz. zijn terug te vinden via http://www.howest.be/aangifteongevallenstudenten.
+                    8.7 Ernstige arbeidsongevallen: indien er zich een ernstig arbeidsongeval voordoet, onderzoekt de interne dienst voor preventie en bescherming van de Stagegever het ongeval og maakt een omstandig verslag op. De kosten voor dit onderzoek worden gedragen door de Stagegever."
+                },
+                new Article()
+                {
+                    Id = new Guid("00000000-9999-9999-9999-000000000008"),
+                    Title = "Artikel 9 - Vroegtijdige beëindiging",
+                    Description = @"9.1 Howest, al dan niet op verzoek van de Student, en de Stagegever kunnen de Stageovereenkomst eenzijdig opschorten en/of eenzijdig beëindigen in volgende gevallen:
+                    - Bij ernstige schending van de Stageovereenkomst;
+                    - In geval van een deontologische fout, manifeste onbekwaamheid, wangedrag, slechte wil, opzettelijke overtreding van deze Overeenkomst, alsook in geval van ongewettigde afwezigheid van de Student;
+                    - Wanneer de fysieke of psychische gezondheid van de Student in gevaar komt;
+                    - Wanneer Howest vaststelt dat de doelstellingen en criteria met betrekking tot de stage, zoals vastgelegd in de stageomschrijving en/of de Stagehandleiding, niet of onvoldoende bereikt worden.
+                    9.2 De eenzijdige beëindiging van de Stageovereenkomst door Howest of de Stagegever moet gebeuren via een gemotiveerd aangetekend schrijven aan de andere betrokken partijen.
+                    9.3 Er zal steeds gestreefd worden naar een gezamenlijke voorafgaande bespreking van de situatie in aanwezigheid van alle Partijen.
+                    9.4 Indien de stage definitief beëindigd wordt, zal er een document van stopzetting van de stage ondertekend worden door alle Partijen.
+                    9.5 In geval van overmacht aan de zijde van één van de Partijen zal de ene partij de andere Partijen onmiddellijk schriftelijk op de hoogte brengen onder vermelding van de oorzaak, de aard en te verwachten duur van de overmacht.
+                    In situaties van overmacht ten gevolge van aan deze Overeenkomst externe omstandigheden, kan de uitvoering van de Stageovereenkomst worden geschorst. Desgevallend en van zodra dit mogelijk is, zal met alle betrokken Partijen worden overlegd hoe en in welke mate, mits de nodige aanpassingen, de Stageovereenkomst verder kan uitgevoerd worden. Als uit het overleg evenwel blijkt dat de verdere uitvoering van de Stageovereenkomst niet meer mogelijk is, wordt deze in onderling akkoord beëindigd.
+                    9.6 Geen van de Partijen kan aansprakelijk gesteld worden voor het niet-uitvoeren van de verbintenissen, zoals gestipuleerd in onderhavige Overeenkomst.
+                    9.7 Indien er tussen de Stagegever en de Student een arbeidsovereenkomst lopende is, dan zal de eventuele vervroegde beëindiging van de Stageovereenkomst geen invloed hebben op de lopende arbeidsovereenkomst, en omgekeerd."
+                },
+                new Article()
+                {
+                    Id = new Guid("00000000-9999-9999-9999-000000000009"),
+                    Title = "Artikel 10 - Middelenverbintenis",
+                    Description = @"Het uitvoeren van de stage vormt een middelenverbintenis, wat betekent dat de Student zich ertoe verbindt zich naar best vermogen in te zetten om de doelstellingen van de stage te behalen, zonder dat er een garantie is op een bepaald resultaat. Er is geen sprake van een resultaatsverbintenis."
+                },
+                new Article()
+                {
+                    Id = new Guid("00000000-9999-9999-9999-000000000010"),
+                    Title = "Artikel 11 - Verwerking persoonsgegevens",
+                    Description= @"11.1 De Partijen komen overeen dat de persoonsgegevens die in het kader van deze Overeenkomst uitgewisseld worden, zullen verwerkt worden overeenkomstig de bepalingen van de Europese Verordening EU 2016/679 met betrekking tot de verwerking van persoonsgegevens (Algemene Verordening Gegevensbescherming) en deze na te leven, alsook de nationale toepasselijke wetgeving te respecteren. Meer bepaald komen de Partijen uitdrukkelijk overeen dat de persoonsgegevens:
+                    - voor welbepaalde, uitdrukkelijk omschreven en gerechtvaardigde doeleinden worden verzameld en vervolgens niet verder mogen verwerkt worden op een met die doeleinden onverenigbare wijze (‘doelbinding’);
+                    - beperkt worden tot wat noodzakelijk is voor de doeleinden waarvoor zij worden verwerkt (‘minimale gegevensverwerking’);
+                    - niet langer worden opgeslagen c.q. bewaard dan nodig is voor de doeleinden waarvoor de verwerking noodzakelijk is (‘opslagbeperking’);
+                    - vertrouwelijk worden behandeld.
+                    11.2 De Stagegever blijft te allen tijde eigenaar van, c.q. rechthebbende op de persoonsgegevens. De Stagegever garandeert de rechtmatigheid van de verwerking van de persoonsgegevens, inclusief de transparantie aan de betrokkenen, evenals de bescherming van de rechten van de betrokkenen overeenkomstig de geldende reglementering en de Algemene Verordening Gegevensverwerking.
+                    11.3 In het kader van de uitvoering van de stageactiviteiten, zal de Student de persoonsgegevens uitsluitend verwerken in opdracht og volgens de instructies van de Stagegever and zal de Student het gegevensbeschermingsbeleid en het privacybeleid van de Stagegever naleven.
+                    11.4 De Student mag de persoonsgegevens niet verwerken voor andere doeleinden dan in het kader van de stage of op een wijze die onverenigbaar is met deze Stageovereenkomst. De Student zal de persoonsgegevens als strikt vertrouwelijk behandelen en zal enkel die gegevens verwerken die strikt noodzakelijk zijn voor de uitvoering van de stage. De Student zal de persoonsgegevens niet aan derden meedelen, noch derden toegang geven tot de persoonsgegevens. De Student zal alle redelijke maatregelen treffen om de vertrouwelijkheid te verzekeren en ervoor zorgen dat de toegang tot deze gegevens steeds strikt beperkt wordt."
+                },
+                new Article()
+                {
+                    Id = new Guid("00000000-9999-9999-9999-000000000011"),
+                    Title = "Artikel 12 - Geschillenregeling",
+                    Description = @"12.1 Deze Overeenkomst wordt beheerst door het Belgisch recht.
+                    12.2 In geval er een geschil uit of met betrekking tot deze Overeenkomst mocht ontstaan tussen de Partijen, zullen de Partijen dit vooreerst in der minne trachten te regelen.
+                    12.3 Indien er geen minnelijke regeling kan bereikt worden, kunnen de Partijen het geschil aanhangig maken bij de bevoegde rechtbank van het gerechtelijk arrondissement West-Vlaanderen, afdeling Kortrijk, welke rechtbank exclusief territoriaal bevoegd zal zijn om te oordelen over de geschillen ontstaan naar aanleiding van deze Overeenkomst."
+                },
+                new Article()
+                {
+                    Id = new Guid("00000000-9999-9999-9999-000000000012"),
+                    Title = "Artikel 13 - Overige bepalingen",
+                    Description = @"13.1 De Partijen mogen deze Overeenkomst niet aan derden overdragen zonder de voorafgaande schriftelijke toestemming van alle Partijen.
+                    13.2 Deze Stageovereenkomst geldt onverminderd de bepalingen van de Stagehandleiding en vormt, samen met deze Stagehandleiding, het enige geldig en bindend kader tussen de Partijen met betrekking tot de stage.
+                    13.3 Wijzigingen aan deze Overeenkomst kunnen enkel worden aangebracht met het schriftelijk akkoord van alle Partijen.
+                    13.4 De Partijen verklaren deze Overeenkomst, inclusief de bijlagen te kennen, een exemplaar te hebben ontvangen en deze te zullen naleven.
+                    13.5 Deze Overeenkomst kan digitaal ondertekend worden door alle Partijen. Een digitale handtekening heeft dezelfde juridische waarde als een handgeschreven handtekening. De Partijen komen overeen dat elektronische kopieën van deze Overeenkomst en de digitale handtekeningen volkomen rechtsgeldig zijn en voor alle doeleinden als origineel worden beschouwd."
+                }
+            };
+
+            var internshipTypes = new InternshipType[]
+            {
+                new()
+                {
+                    Id = new Guid("30000000-0000-0000-3333-000000000001"),
+                    BaseName = "Meewerkstage (meeloopstage)"
+                },
+                new()
+                {
+                    Id = new Guid("30000000-0000-0000-3333-000000000002"),
+                    BaseName = "Afstudeerstage (onderzoeksstage)"
+                },
+                new()
+                {
+                    Id = new Guid("30000000-0000-0000-3333-000000000003"),
+                    BaseName = "Snuffelstage / observatiestage"
+                },
+                new()
+                {
+                    Id = new Guid("30000000-0000-0000-3333-000000000004"),
+                    BaseName = "Maatschappelijke stage"
+                },
+                new()
+                {
+                    Id = new Guid("30000000-0000-0000-3333-000000000005"),
+                    BaseName = "Werkstage / zomerstage"
+                },
+                new()
+                {
+                    Id = new Guid("30000000-0000-0000-3333-000000000006"),
+                    BaseName = "Buitenlandse stage"
+                }
+            };
+
+            var internshipContracts = new InternshipContract[]
+            {
+                new()
+                {
+                    Id = new Guid("40000000-0000-0000-0000-000000000011"),
+                    BaseName = "Afstudeerstage Ortho - Kahuan Ng",
+                    Created = seedDate,
+                    InternshipStreet = "Gouwelozestraat",
+                    InternshipStreetNumber = 10,
+                    InternshipPostalCode = "8400",
+                    InternshipMunicipality = "Oostende",
+                    InternshipOrganizationId = new Guid("22222222-2222-2222-2222-222222222222"),
+                    DepartmentId = new Guid("20000000-0000-0000-0000-000000000002"),
+                    InternshipTypeId = new Guid("30000000-0000-0000-3333-000000000002"),
+                    StudentId = kahuanUserId,
+                    InternshipMentorId = miletoDiMarcoId,
+                    InternshipAttendantId = kristienUserId,
+                    StartDate = new DateTime(2026, 9, 1),
+                    EndDate = new DateTime(2027, 1, 31),
+                    NeedsMedical = true,
+                    StudentIsSigned = false,
+                    SupervisourIsSigned = false,
+                    MentorIsSigned = false,
+                    CoordinatorValidation = false,
+                    HasRiskAnalysis = false,
+                    InternshipCoordinatorRemarks = "Risicoanalyse is goedgekeurd door Kristien. Graag zo snel mogelijk de medische keuring inplannen."
+                },
+
+                new()
+                {
+                    Id = new Guid("40000000-0000-0000-0000-000000000012"),
+                    BaseName = "Meewerkstage Leefgroep - Kahuan Ng",
+                    Created = new DateTime(2025, 9, 5),
+                    InternshipStreet = "Gouwelozestraat",
+                    InternshipStreetNumber = 10,
+                    InternshipPostalCode = "8400",
+                    InternshipMunicipality = "Oostende",
+                    InternshipOrganizationId = new Guid("22222222-2222-2222-2222-222222222222"),
+                    DepartmentId = new Guid("20000000-0000-0000-0000-000000000002"),
+                    InternshipTypeId = new Guid("30000000-0000-0000-3333-000000000001"),
+                    StudentId = kahuanUserId,
+                    InternshipMentorId = miletoDiMarcoId,
+                    InternshipAttendantId = kristienUserId,
+                    StartDate = new DateTime(2025, 10, 1),
+                    EndDate = new DateTime(2026, 1, 20),
+                    NeedsMedical = true,
+                    StudentIsSigned = false,
+                    SupervisourIsSigned = false,
+                    MentorIsSigned = false,
+                    CoordinatorValidation = false,
+                    HasRiskAnalysis = false,
+                    StudentSignature = "uploads/archief_handtekening_kahuan.png"
+                },
+
+                new()
+                {
+                    Id = new Guid("40000000-0000-0000-0000-000000000013"),
+                    BaseName = "Oriënterende Observatie Ortho - Kahuan Ng",
+                    Created = seedDate,
+                    InternshipStreet = "Gouwelozestraat",
+                    InternshipStreetNumber = 10,
+                    InternshipPostalCode = "8400",
+                    InternshipMunicipality = "Oostende",
+                    InternshipOrganizationId = new Guid("22222222-2222-2222-2222-222222222222"),
+                    DepartmentId = new Guid("20000000-0000-0000-0000-000000000002"),
+                    InternshipTypeId = new Guid("30000000-0000-0000-3333-000000000003"),
+                    StudentId = kahuanUserId,
+                    InternshipMentorId = miletoDiMarcoId,
+                    InternshipAttendantId = kristienUserId,
+                    StartDate = new DateTime(2026, 11, 1),
+                    EndDate = new DateTime(2026, 11, 15),
+                    NeedsMedical = false,
+                    StudentIsSigned = false,
+                    SupervisourIsSigned = false,
+                    MentorIsSigned = false,
+                    CoordinatorValidation = false,
+                    HasRiskAnalysis = false,                    
+                    InternshipCoordinatorRemarks = "Dit betreft een korte observatiestage van twee weken. Mentor dient nog te worden toegewezen door de supervisor van AZ Oostende."
+                }
+            };
+            
+            modelbuilder.Entity<ApplicationRole>().HasData(applicationRoles);
+            modelbuilder.Entity<ApplicationUser>().HasData(applicationUsers);
+            modelbuilder.Entity<Cluster>().HasData(clusters);
+            modelbuilder.Entity<Department>().HasData(departments);
+            modelbuilder.Entity<StageOrganization>().HasData(internshipOrganisations);
+            modelbuilder.Entity<InternshipType>().HasData(internshipTypes);
+            modelbuilder.Entity<Article>().HasData(articles);
+            modelbuilder.Entity<InternshipContract>().HasData(internshipContracts);
+            
+            var contractIds = new[]
+            {
+                new Guid("40000000-0000-0000-0000-000000000011"), // Contract 1
+                new Guid("40000000-0000-0000-0000-000000000012"), // Contract 2
+                new Guid("40000000-0000-0000-0000-000000000013")  // Contract 3
+            };
+
+            var contractArticlesSeed = contractIds
+                .SelectMany(contractId => articles.Select(article => new
+                {
+                    InternshipContractsId = contractId,
+                    ArticlesId = article.Id!.Value
+                }))
+                .ToArray();
+            
+            modelbuilder.Entity("ArticleInternshipContract").HasData(contractArticlesSeed);
+        }
+    }
+}

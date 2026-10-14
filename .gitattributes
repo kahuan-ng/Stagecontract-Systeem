@@ -1,0 +1,22 @@
+# Handle all text files automatically
+* text=auto
+
+# Force LF (Unix) for source code and config (safe for Mac & Windows)
+*.cs text eol=lf
+*.cshtml text eol=lf
+*.json text eol=lf
+*.css text eol=lf
+*.js text eol=lf
+
+# Project files
+*.csproj text eol=lf
+
+# Visual Studio Solution files MUST have CRLF to function correctly on Windows
+*.sln text eol=crlf
+
+# Ensure binary files (like images) are not modified
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary

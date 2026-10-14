@@ -1,0 +1,65 @@
+@model MentorIndexViewModel
+
+<div class="container mt-5 mb-5">
+    <div class="text-center mb-5">
+        <h4 class="fw-bold">Welkom, @Model.MentorName. Je volgt momenteel <strong>@Model.Contracts.Count</strong> student(en) op.</h4>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-12">
+        <div class="card-field rounded-0 p-4 p-md-5">
+            <div class="my-4">
+                <span class="card-badge c-yellow text-uppercase fw-bolder h6 d-inline-block px-3 py-2 rounded-0">
+                    Toegewezen Stagiairs
+                </span>
+            </div>
+
+            @if (!Model.Contracts.Any())
+            {
+                <div class="alert card-field c-red text-uppercase fw-bolder rounded-0 my-4">
+                    Er zijn momenteel geen actieve of ingevulde stagecontracten aan jou gekoppeld
+                </div>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover align-middle card-cel">
+                        <thead class="table-dark">
+                        <tr>
+                            <th scope="col">Student</th>
+                            <th scope="col">E-mail</th>
+                            <th scope="col">Telefoon nummer</th>
+                            <th scope="col">Organisatie</th>
+                            <th scope="col">Bekijk Contract</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var student in @Model.Contracts)
+                        {
+                            <tr class="form-tr">
+                                <td>@student.StudentName</td>
+                                <td>@student.StudentEmail</td>
+                                <td>@student.StudentTelephoneNumber</td>
+                                <td>@student.StudentRepresentedOrganisation</td>
+                                <td>
+                                    @if (student.IsSigned)
+                                    {
+                                        <a asp-area="Mentor" asp-controller="Mentor" asp-action="ViewStudentContract" asp-route-ContractId="@student.ContractId" class="card-badge c-green text-decoration-none text-black">Getekend</a>
+                                    }
+                                    else
+                                    {
+                                        <a asp-area="Mentor" asp-controller="Mentor" asp-action="ViewStudentContract" asp-route-ContractId="@student.ContractId" class="card-badge c-red text-decoration-none text-black">Nog te tekenen</a>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            @* <a asp-controller="Mentor" asp-action="DownloadFile" asp-route-filename="dummypdf.pdf" class="btn btn-primary"> Download PDF</a></table> *@
+            </div>
+        </div>
+    </div>
+</div>
+        

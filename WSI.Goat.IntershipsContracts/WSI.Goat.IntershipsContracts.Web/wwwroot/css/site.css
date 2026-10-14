@@ -1,0 +1,75 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.card-button {
+  border: 3px solid black !important;
+  box-shadow: 8px 8px 0px 0px rgba(0,0,0,1);
+  transition: all 0.2s ease-in-out;
+  background-color: #ffffff;
+  color: black !important;
+  border-radius: 0;
+}
+
+.card-button:hover {
+  background-color: #88c0d0;
+}
+
+.card-field {
+  border: 3px solid black !important;
+  box-shadow: 8px 8px 0px 0px rgba(0,0,0,1);
+  padding: 20px;
+}
+
+.card-cel {
+  border: 3px solid black !important;
+  padding: 20px;
+}
+
+.card-badge {
+  border: 3px solid black !important;
+  padding: 5px;
+}
+
+.card-button-badge {
+  border: 3px solid black !important;
+  padding: 5px;
+}
+
+.card-button-badge:hover {
+  background-color: #f7d046;
+}
+
+.card-nav {
+  border-bottom: 3px solid black !important;
+}
+
+.form-tr td {
+  padding-top: 20px !important;
+  padding-bottom: 20px !important;
+}
+
+.c-yellow { background-color: #f7d046; }
+.c-red { background-color: #fd5a46; }
+.c-blue { background-color: #88c0d0; }
+.c-pink { background-color: #ff94e0; }
+.c-green { background-color: #a3be8c; }

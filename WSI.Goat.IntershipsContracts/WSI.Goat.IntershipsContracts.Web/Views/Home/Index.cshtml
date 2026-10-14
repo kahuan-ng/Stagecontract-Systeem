@@ -1,0 +1,58 @@
+﻿@{
+    ViewData["Title"] = "S-Tool stage platform";
+}
+
+<div class="d-flex flex-column justify-content-center flex-grow-1" 
+     style="min-height: 80vh;">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h1 class="display-3 fw-black fw-bolder text-uppercase mb-2">
+                @ViewData["Title"]
+            </h1>
+            <p>Maak een keuze om u als een specifieke persoon aan te melden</p>
+        </div>
+
+        <div class="row g-5 justify-content-center">
+            <div class="col-sm-12 col-md-5">
+                <a asp-area="Student" 
+                   asp-controller="Student" 
+                   asp-action="Login"
+                   class="btn card-button c-yellow d-flex flex-column align-items-center justify-content-center py-5 w-100 rounded-0 text-decoration-none">
+                    <span class="h2 text-uppercase fw-bold m-0">Student</span>
+                    <small class="text-lowercase fw-bold mt-2">Stagenemer student howest</small>
+                </a>
+            </div>
+            
+            <div class="col-sm-12 col-md-5">
+                <a asp-area="Supervisor" 
+                   asp-controller="Supervisor" 
+                   asp-action="Login"
+                   class="btn card-button c-yellow d-flex flex-column align-items-center justify-content-center py-5 w-100 rounded-0 text-decoration-none">
+                    <span class="h2 text-uppercase fw-bold m-0">Stagegever</span>
+                    <small class="text-lowercase fw-bold mt-2">Begeleider stageplaats</small>
+                </a>
+            </div>
+            
+            <div class="col-sm-12 col-md-5">
+                <a asp-area="Coordinator" 
+                   asp-controller="Coordinator" 
+                   asp-action="Login"
+                   class="btn card-button c-yellow d-flex flex-column align-items-center justify-content-center py-5 w-100 rounded-0 text-decoration-none">
+                    <span class="h2 text-uppercase fw-bold m-0">Stage coördinator</span>
+                    <small class="text-lowercase fw-bold mt-2">Coördinator howest</small>
+                </a>
+            </div>
+
+            <div class="col-sm-12 col-md-5">
+                <a asp-area="Mentor" 
+                   asp-controller="Mentor" 
+                   asp-action="Login"
+                   class="btn card-button c-yellow d-flex flex-column align-items-center justify-content-center py-5 w-100 rounded-0 text-decoration-none">
+                    <span class="h2 text-uppercase fw-bold m-0">Mentor</span>
+                    <small class="text-lowercase fw-bold mt-2">Mentor stageplaats</small>
+                </a>
+            </div>
+            
+        </div>
+    </div>
+</div>

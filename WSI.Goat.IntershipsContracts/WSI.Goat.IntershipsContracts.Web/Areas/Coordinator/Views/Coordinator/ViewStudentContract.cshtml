@@ -1,0 +1,230 @@
+﻿@model CoordinatorViewStudentContractViewModel
+@{
+    ViewData["Title"] = "Contract Details";
+}
+<div class="container mt-5 mb-5">
+    <div class="text-center mb-5">
+        <h1 class="display-5 fw-black fw-bolder text-uppercase mb-2">
+            @Model.InternshipContractName
+        </h1>
+        <p class="fw-light">Overzicht van de contractgegevens en goedkeuringsstatussen.</p>
+    </div>
+
+    <div class="row g-4 justify-content-center">
+        <div class="col-lg-12">
+            <div class="bg-white card-field rounded-0 p-4 p-md-5">
+
+                <div class="row g-4 mb-5">
+                    <div class="col-md-4 text-center">
+                        <div class="card-cel rounded-0 h-100 d-flex flex-column justify-content-center align-items-center @(Model.StudentIsSigned ? "c-green" : "c-red")">
+                            <span class="text-uppercase fw-black small d-block mb-1">Student handtekening</span>
+                            <span class="h4 fw-bolder text-uppercase m-0">@(Model.StudentIsSigned ? "Getekend" : "Ongetekend")</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <div class="card-cel rounded-0 h-100 d-flex flex-column justify-content-center align-items-center @(Model.MentorIsSigned ? "c-green" : "c-red")">
+                            <span class="text-uppercase fw-black small d-block mb-1">Mentor handtekening</span>
+                            <span class="h4 fw-bolder text-uppercase m-0">@(Model.MentorIsSigned ? "Getekend" : "Ongetekend")</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <div class="card-cel rounded-0 h-100 d-flex flex-column justify-content-center align-items-center @(Model.SupervisourIsSigned ? "c-green" : "c-red")">
+                            <span class="text-uppercase fw-black small d-block mb-1">Supervisour Handtekening</span>
+                            <span class="h4 fw-bolder text-uppercase m-0">@(Model.SupervisourIsSigned ? "Getekend" : "Ongetekend")</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <div class="card-cel rounded-0 h-100 d-flex flex-column justify-content-center align-items-center @(Model.CoordinatorValidation ? "c-green" : "c-red")">
+                            <span class="text-uppercase fw-black small d-block mb-1">Coordinatie validatie</span>
+                            <span class="h4 fw-bolder text-uppercase m-0">@(Model.CoordinatorValidation ? "Gekeurd" : "Ongekeurd")</span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 text-center">
+                        <div class="card-cel rounded-0 h-100 d-flex flex-column justify-content-center align-items-center @(Model.HasRiskAnalysis ? "c-green" : "c-red")">
+                            <span class="text-uppercase fw-black small d-block mb-1">Risicoanalyse</span>
+                            <span class="h4 fw-bolder text-uppercase m-0">@(Model.HasRiskAnalysis ? "Aanwezig" : "Ontbreekt")</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <div class="card-cel rounded-0 h-100 d-flex flex-column justify-content-center align-items-center @(Model.NeedsMedical ? "c-green" : "c-blue")">
+                            <span class="text-uppercase fw-black small d-block mb-1">Medisch Attest</span>
+                            <span class="h4 fw-bolder text-uppercase m-0">@(Model.NeedsMedical ? "Vereist" : "Niet Vereist")</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="my-4">
+                    <span class="card-badge c-yellow text-uppercase fw-bolder h6 d-inline-block px-3 py-2 rounded-0">
+                        Algemene Informatie
+                    </span>
+                </div>
+
+                <div class="row g-4 mb-5">
+                    <div class="col-md-6">
+                        <div class="card-cel rounded-0 bg-light h-100">
+                            <span class="text-uppercase small fw-bold text-muted d-block">Opleiding</span>
+                            <span class="fw-bolder h5">@Model.DepartmentName</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card-cel rounded-0 bg-light h-100">
+                            <span class="text-uppercase small fw-bold text-muted d-block">Type Stage</span>
+                            <span class="fw-bolder h5">@Model.InternshipTypeName</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card-cel rounded-0 bg-light h-100">
+                            <span class="text-uppercase small fw-bold text-muted d-block">Startdatum</span>
+                            <span class="fw-bolder h5">@Model.StartDate.ToString("dd MMMM yyyy")</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card-cel rounded-0 bg-light h-100">
+                            <span class="text-uppercase small fw-bold text-muted d-block">Einddatum</span>
+                            <span class="fw-bolder h5">@Model.EndDate.ToString("dd MMMM yyyy")</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="my-4">
+                    <span class="card-badge c-yellow text-uppercase fw-bolder h6 d-inline-block px-3 py-2 rounded-0">
+                        Gekoppelde Personen
+                    </span>
+                </div>
+
+                <div class="row border-3 border-dark mb-3">
+                    <div class="col-md-12">
+                        <div class="card-cel rounded-0 bg-light h-100">
+                            <span class="text-uppercase small fw-bold text-muted d-block">Student</span>
+                            <span class="fw-bolder h5">@Model.StudentName</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row border-3 border-dark mb-5">
+                    <div class="col-md-6">
+                        <div class="card-cel rounded-0 bg-light h-100">
+                            <span class="text-uppercase small fw-bold text-muted d-block">Stagementor (Bedrijf)</span>
+                            <span class="fw-bolder h5">@Model.MentorName</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card-cel rounded-0 bg-light h-100">
+                            <span class="text-uppercase small fw-bold text-muted d-block">Stagebegeleider (School)</span>
+                            <span class="fw-bolder h5">@Model.AttendantName</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="my-4">
+                    <span class="card-badge c-yellow text-uppercase fw-bolder h6 d-inline-block px-3 py-2 rounded-0">
+                        Stage Adres Gegevens
+                    </span>
+                </div>
+
+                <div class="row border-3 border-dark mb-3">
+                    <div class="col-md-8">
+                        <div class="card-cel rounded-0">
+                            <span class="text-uppercase small fw-bold text-muted d-block">Straat</span>
+                            <span class="fw-bolder h5">@Model.InternshipStreet</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card-cel rounded-0">
+                            <span class="text-uppercase small fw-bold text-muted d-block">Huisnummer</span>
+                            <span class="fw-bolder h5">@Model.InternshipStreetNumber</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row border-3 border-dark mb-5">
+                    <div class="col-md-4">
+                        <div class="card-cel rounded-0">
+                            <span class="text-uppercase small fw-bold text-muted d-block">Postcode</span>
+                            <span class="fw-bolder h5">@Model.InternshipPostalCode</span>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-cel rounded-0">
+                            <span class="text-uppercase small fw-bold text-muted d-block">Gemeente</span>
+                            <span class="fw-bolder h5">@Model.InternshipMunicipality</span>
+                        </div>
+                    </div>
+                </div>
+
+                @if (!string.IsNullOrWhiteSpace(Model.CoordinatorRemarks))
+                {
+                    <div class="my-4">
+                        <span class="card-badge c-yellow text-uppercase fw-bolder h6 d-inline-block px-3 py-2 rounded-0">
+                            Opmerkingen
+                        </span>
+                    </div>
+
+                    <div class="row mb-5">
+                        <div class="col-md-12">
+                            <div class="card-cel rounded-0">
+                                <span asp-validation-for="CoordinatorRemarks" class="text-danger text-uppercase small mb-1 d-block"></span>
+                                <p class="form-control rounded-0 w-100" rows="4">@Model.CoordinatorRemarks</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                @if (Model.HasRiskAnalysis)
+                {
+                    <div class="my-4">
+                        <span class="card-badge c-yellow text-uppercase fw-bolder h6 d-inline-block px-3 py-2 rounded-0">
+                            Stageovereenkomst downloaden
+                        </span>
+                    </div>
+
+                    <div class="card-cel rounded-0 bg-light d-flex justify-content-center align-items-center gap-3">
+                        <a asp-action="DownloadStageContract" class="btn card-button rounded-0 text-uppercase px-5 py-3 fw-bold text-decoration-none">
+                            Download stagecontract
+                        </a>
+                    </div>
+                }
+
+                @if (Model.HasRiskAnalysis)
+                {
+                    <div class="my-4">
+                        <span class="card-badge c-yellow text-uppercase fw-bolder h6 d-inline-block px-3 py-2 rounded-0">
+                            Risico-analyse downloaden
+                        </span>
+                    </div>
+
+                    <div class="card-cel rounded-0 bg-light d-flex justify-content-center align-items-center gap-3">
+                        <a asp-action="DownloadRiskAnalysis" class="btn card-button rounded-0 text-uppercase px-5 py-3 fw-bold text-decoration-none">
+                            Download risico-analyse
+                        </a>
+                    </div>
+                }
+
+                @if (Model.Articles != null && Model.Articles.Any())
+                {
+                    <div class="my-4">
+                        <span class="card-badge c-yellow text-uppercase fw-bolder h6 d-inline-block px-3 py-2 rounded-0">
+                            Bijgevoegde Artikelen
+                        </span>
+                    </div>
+                    <div class="bg-light p-4 border border-3 border-dark rounded-0 mb-4" style="max-height: 350px; overflow-y: auto;">
+                        @foreach (var article in Model.Articles)
+                        {
+                            <div class="mb-4">
+                                <h5 class="fw-bolder text-uppercase">@article.Title</h5>
+                                <p style="white-space: pre-wrap;" class="mb-0">@article.Description</p>
+                            </div>
+                        }
+                    </div>
+                }
+
+            </div>
+        </div>
+
+        <div class="text-center pt-3">
+            <a asp-action="Index" class="btn card-button fw-bold text-uppercase py-3 px-4 text-center text-decoration-none">
+                Terug naar overzicht
+            </a>
+        </div>
+    </div>
+</div>

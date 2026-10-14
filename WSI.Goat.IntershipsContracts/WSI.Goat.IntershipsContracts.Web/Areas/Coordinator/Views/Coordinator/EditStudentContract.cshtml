@@ -1,0 +1,296 @@
+﻿@model CoordinatorEditStudentContractViewModel
+
+@{
+    ViewData["Title"] = "Wijzig Contract";
+}
+
+@if (TempData["EmailStatus"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["EmailStatus"]
+    </div>
+}
+
+<div class="container mt-5 mb-5">
+    <div class="text-center mb-5">
+        <h1 class="display-3 fw-black fw-bolder text-uppercase mb-2">
+            @ViewBag.Title
+        </h1>
+        <p class="fw-bold">Gegevens van het contract aanpassen.</p>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="bg-white card-field rounded-0">
+                <div class="row g-4 mb-5">
+                    <div class="col-md-4 text-center">
+                        <div class="card-cel rounded-0 h-100 d-flex flex-column justify-content-center align-items-center @(Model.StudentIsSigned ? "c-green" : "c-red")">
+                            <span class="text-uppercase fw-black small d-block mb-1">Student handtekening</span>
+                            <span class="h4 fw-bolder text-uppercase m-0">@(Model.StudentIsSigned ? "Getekend" : "Ongetekend")</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <div class="card-cel rounded-0 h-100 d-flex flex-column justify-content-center align-items-center @(Model.MentorIsSigned ? "c-green" : "c-red")">
+                            <span class="text-uppercase fw-black small d-block mb-1">Mentor handtekening</span>
+                            <span class="h4 fw-bolder text-uppercase m-0">@(Model.MentorIsSigned ? "Getekend" : "Ongetekend")</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <div class="card-cel rounded-0 h-100 d-flex flex-column justify-content-center align-items-center @(Model.SupervisourIsSigned ? "c-green" : "c-red")">
+                            <span class="text-uppercase fw-black small d-block mb-1">Supervisour Handtekening</span>
+                            <span class="h4 fw-bolder text-uppercase m-0">@(Model.SupervisourIsSigned ? "Getekend" : "Ongetekend")</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <div class="card-cel rounded-0 h-100 d-flex flex-column justify-content-center align-items-center @(Model.CoordinatorValidation ? "c-green" : "c-red")">
+                            <span class="text-uppercase fw-black small d-block mb-1">Coordinatie validatie</span>
+                            <span class="h4 fw-bolder text-uppercase m-0">@(Model.CoordinatorValidation ? "Gekeurd" : "Ongekeurd")</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <div class="card-cel rounded-0 h-100 d-flex flex-column justify-content-center align-items-center @(Model.HasRiskAnalysis ? "c-green" : "c-red")">
+                            <span class="text-uppercase fw-black small d-block mb-1">Risicoanalyse</span>
+                            <span class="h4 fw-bolder text-uppercase m-0">@(Model.HasRiskAnalysis ? "Aanwezig" : "Ontbreekt")</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <div class="card-cel rounded-0 h-100 d-flex flex-column justify-content-center align-items-center @(Model.NeedsMedical ? "c-green" : "c-blue")">
+                            <span class="text-uppercase fw-black small d-block mb-1">Medisch Attest</span>
+                            <span class="h4 fw-bolder text-uppercase m-0">@(Model.NeedsMedical ? "Vereist" : "Niet Vereist")</span>
+                        </div>
+                    </div>
+                </div>
+
+                <form asp-controller="Coordinator" 
+                      asp-action="EditStudentContract" 
+                      method="post">
+                    <input type="hidden" asp-for="StudentName" />
+                    <input type="hidden" asp-for="AttendantName" />
+                    <input asp-for="StudentId" >
+                    <div asp-validation-summary="All" class="text-danger mb-4 fw-bold"></div>
+                    @Html.AntiForgeryToken()
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-4 fw-bold"></div>
+
+                    <div class="form-group mb-4">
+                        <label asp-for="InternshipContractName" class="form-label text-uppercase fw-bolder h6"></label>
+                        <input asp-for="InternshipContractName" class="form-control form-control-lg rounded-0 border-3 border-dark" placeholder="Stage overeenkomst - [Jouw Naam]" />
+                        <span asp-validation-for="InternshipContractName" class="text-danger fw-bold small mt-1 d-block"></span>
+                    </div>
+
+                    <div class="my-4">
+                        <span class="card-badge c-yellow text-uppercase fw-bolder h6 d-inline-block px-3 py-2 rounded-0">
+                            Algemene Informatie
+                        </span>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 form-group mb-4">
+                            <label asp-for="SelectedDepartment" class="form-label text-uppercase fw-bolder h6"></label>
+                            <select asp-for="SelectedDepartment" asp-items="Model.Departments" class="form-select form-select-lg rounded-0 border-3 border-dark">
+                                <option value="">Kies een opleiding</option>
+                            </select>
+                            <span asp-validation-for="SelectedDepartment" class="text-danger fw-bold small mt-1 d-block"></span>
+                        </div>
+
+                        <div class="col-md-6 form-group mb-4">
+                            <label asp-for="SelectedInternshipType" class="form-label text-uppercase fw-bolder h6"></label>
+                            <select asp-for="SelectedInternshipType" asp-items="Model.InternshipTypes" class="form-select form-select-lg rounded-0 border-3 border-dark">
+                                <option value="">Kies een type stage</option>
+                            </select>
+                            <span asp-validation-for="SelectedInternshipType" class="text-danger fw-bold small mt-1 d-block"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 form-group mb-4">
+                            <label asp-for="StartDate" class="form-label text-uppercase fw-bolder h6"></label>
+                            <input asp-for="StartDate" type="date" class="form-control form-control-lg rounded-0 border-3 border-dark" />
+                            <span asp-validation-for="StartDate" class="text-danger fw-bold small mt-1 d-block"></span>
+                        </div>
+
+                        <div class="col-md-6 form-group mb-4">
+                            <label asp-for="EndDate" class="form-label text-uppercase fw-bolder h6"></label>
+                            <input asp-for="EndDate" type="date" class="form-control form-control-lg rounded-0 border-3 border-dark" />
+                            <span asp-validation-for="EndDate" class="text-danger fw-bold small mt-1 d-block"></span>
+                        </div>
+                    </div>
+
+                    <div class="my-4">
+                        <span class="card-badge c-yellow text-uppercase fw-bolder h6 d-inline-block px-3 py-2 rounded-0">
+                            Gekoppelde Personen
+                        </span>
+                    </div>
+
+                    <div class="row border-3 border-dark mb-3">
+                        <div class="col-md-12">
+                            <div class="card-cel rounded-0 bg-light h-100">
+                                <span class="text-uppercase small fw-bold text-muted d-block">Student</span>
+                                <span class="fw-bolder h5">@Model.StudentName</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row border-3 border-dark mb-5">
+                        <div class="col-md-6">
+                            <div class="card-cel rounded-0 bg-light h-100">
+                                <label asp-for="SelectedMentor" class="form-label text-uppercase fw-bolder h6"></label>
+                                <select asp-for="SelectedMentor" asp-items="Model.Mentors" class="form-select form-select-lg rounded-0 border-3 border-dark">
+                                    <option value="">Kies een mentor</option>
+                                </select>
+                                <span asp-validation-for="SelectedMentor" class="text-danger fw-bold small mt-1 d-block"></span>
+                            </div>                        
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="card-cel rounded-0 bg-light h-100 align-content-center">
+                                <span class="text-uppercase small fw-bold text-muted d-block">Stagebegeleider (School)</span>
+                                <span class="fw-bolder h5">@Model.AttendantName</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="my-4">
+                        <span class="card-badge c-yellow text-uppercase fw-bolder h6 d-inline-block px-3 py-2 rounded-0">
+                            Stageplaats & Adres Gegevens
+                        </span>
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <label asp-for="OrganisationEmail" class="form-label text-uppercase fw-bolder h6"></label>
+                        <input asp-for="OrganisationEmail" class="form-control form-control-lg rounded-0 border-3 border-dark" placeholder="hr@stagebedrijf.be" />
+                        <span asp-validation-for="OrganisationEmail" class="text-danger fw-bold small mt-1 d-block"></span>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-9 form-group mb-4">
+                            <label asp-for="InternshipStreet" class="form-label text-uppercase fw-bolder h6"></label>
+                            <input asp-for="InternshipStreet" class="form-control form-control-lg rounded-0 border-3 border-dark" placeholder="Nieuwstraat" />
+                            <span asp-validation-for="InternshipStreet" class="text-danger fw-bold small mt-1 d-block"></span>
+                        </div>
+                        <div class="col-md-3 form-group mb-4">
+                            <label asp-for="InternshipStreetNumber" class="form-label text-uppercase fw-bolder h6"></label>
+                            <input asp-for="InternshipStreetNumber" type="number" class="form-control form-control-lg rounded-0 border-3 border-dark" placeholder="10" />
+                            <span asp-validation-for="InternshipStreetNumber" class="text-danger fw-bold small mt-1 d-block"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 form-group mb-4">
+                            <label asp-for="InternshipPostalCode" class="form-label text-uppercase fw-bolder h6"></label>
+                            <input asp-for="InternshipPostalCode" class="form-control form-control-lg rounded-0 border-3 border-dark" placeholder="8500" />
+                            <span asp-validation-for="InternshipPostalCode" class="text-danger fw-bold small mt-1 d-block"></span>
+                        </div>
+                        <div class="col-md-8 form-group mb-4">
+                            <label asp-for="InternshipMunicipality" class="form-label text-uppercase fw-bolder h6"></label>
+                            <input asp-for="InternshipMunicipality" class="form-control form-control-lg rounded-0 border-3 border-dark" placeholder="Brugge" />
+                            <span asp-validation-for="InternshipMunicipality" class="text-danger fw-bold small mt-1 d-block"></span>
+                        </div>
+                    </div>
+
+                    <div class="my-4">
+                        <span class="card-badge c-yellow text-uppercase fw-bolder h6 d-inline-block px-3 py-2 rounded-0">
+                            Opmerkingen
+                        </span>
+                    </div>
+
+                    <div class="row mb-5">
+                        <div class="col-md-12">
+                            <div class="card-cel rounded-0">
+                                <span asp-validation-for="InternshipCoordinatorRemarks" class="text-danger text-uppercase small mb-1 d-block"></span>
+                                <textarea asp-for="InternshipCoordinatorRemarks" class="form-control rounded-0 w-100" rows="4" placeholder="Typ hier eventuele opmerkingen voor de student of de stagecoördinator"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    @if (Model.NeedsMedical)
+                    {
+                        <div class="my-4">
+                            <span class="card-badge c-yellow text-uppercase fw-bolder h6 d-inline-block px-3 py-2 rounded-0">
+                                Medisch attest 
+                            </span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 form-group mb-4">
+                                <label asp-for="MedicalResearchDate" class="form-label text-uppercase fw-bolder h6"></label>
+                                <input asp-for="MedicalResearchDate" type="date" class="form-control form-control-lg rounded-0 border-3 border-dark" />
+                                <span asp-validation-for="MedicalResearchDate" class="text-danger fw-bold small mt-1 d-block"></span>
+                            </div>
+
+                            <div class="col-md-6 form-group mb-4">
+                                <label asp-for="MedicalResearchLocation" class="form-label text-uppercase fw-bolder h6"></label>
+                                <input asp-for="MedicalResearchLocation" class="form-control form-control-lg rounded-0 border-3 border-dark" placeholder="Brugge" />
+                                <span asp-validation-for="MedicalResearchLocation" class="text-danger fw-bold small mt-1 d-block"></span>
+                            </div>
+                        </div>                        
+                    }
+
+                    <div class="my-4">
+                        <span class="card-badge c-yellow text-uppercase fw-bolder h6 d-inline-block px-3 py-2 rounded-0">
+                            Contract valideren
+                        </span>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-auto">
+                            <div class="form-check form-switch mb-5 p-0 d-flex align-items-center">
+                                <input asp-for="CoordinatorValidation" type="checkbox" class="form-check-input border-3 border-dark m-0 me-3 rounded-0" id="coordinatorSwitch" style="width: 3em; height: 1.5em; cursor: pointer;" />
+                                <label asp-for="CoordinatorValidation" class="form-check-label text-uppercase fw-bolder h6 m-0" for="coordinatorSwitch" style="cursor: pointer;"></label>
+                            </div>
+                        </div>
+
+                        <div class="col-auto">
+                            <div class="form-check form-switch mb-5 p-0 d-flex align-items-center">
+                                <input asp-for="HasRiskAnalysis" type="checkbox" class="form-check-input border-3 border-dark m-0 me-3 rounded-0" id="riskSwitch" style="width: 3em; height: 1.5em; cursor: pointer;" />
+                                <label asp-for="HasRiskAnalysis" class="form-check-label text-uppercase fw-bolder h6 m-0" for="riskSwitch" style="cursor: pointer;"></label>
+                            </div>
+                        </div>
+                    </div>
+
+                       
+
+                    <div class="my-4">
+                        <span class="card-badge c-yellow text-uppercase fw-bolder h6 d-inline-block px-3 py-2 rounded-0 mb-4">
+                            Contractvoorwaarden
+                        </span>
+
+                        @if (Model.Articles != null && Model.Articles.Any())
+                        {
+                            <div class="bg-light p-4 border border-3 border-dark rounded-0 mb-4" style="max-height: 350px; overflow-y: auto;">
+                                @for (int i = 0; i < Model.Articles.Count; i++)
+                                {
+                                    <div class="mb-4 p-3 bg-white border border-2 border-dark">
+                                        <input type="hidden" asp-for="@Model.Articles[i].Id" />
+
+                                        <div class="form-group mb-2">
+                                            <label asp-for="@Model.Articles[i].Title" class="form-label text-uppercase fw-bold text-muted">Artikel Titel</label>
+                                            <input asp-for="@Model.Articles[i].Title" class="form-control rounded-0 border-2 border-dark fw-bold" />
+                                            <span asp-validation-for="@Model.Articles[i].Title" class="text-danger small"></span>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label asp-for="@Model.Articles[i].Description" class="form-label text-uppercase fw-bold text-muted">Inhoud/Beschrijving</label>
+                                            <textarea asp-for="@Model.Articles[i].Description" class="form-control rounded-0 border-2 border-dark" rows="12"></textarea>
+                                            <span asp-validation-for="@Model.Articles[i].Description" class="text-danger small"></span>
+                                        </div>
+                                    </div>
+                                })
+
+                            </div>
+                        }
+                    </div>
+
+                    <div class="d-flex flex-column flex-md-row justify-content-between gap-4 pt-3">
+                        <a asp-action="Index" class="btn card-button fw-bold text-uppercase py-3 px-4 text-center text-decoration-none">
+                            Annuleren
+                        </a>
+                        <button type="submit" class="btn card-button c-green fw-bold text-uppercase py-3 px-5">
+                            Contract Opslaan
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

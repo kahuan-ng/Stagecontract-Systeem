@@ -1,0 +1,96 @@
+@model CoordinatorSearchViewModel
+
+<div class="container mt-5 mb-5">
+    <div class="d-flex align-items-center mb-4">
+        <a asp-area="Coordinator"
+           asp-controller="Coordinator" 
+           asp-action="Index" 
+           class="btn card-button-badge c-blue rounded-0 me-4 text-uppercase fw-bold">
+            Ga terug
+        </a>
+    </div>
+
+    <div class="card-field rounded-0 p-4 p-md-5 mb-4">
+        <form asp-area="Coordinator" 
+              asp-controller="Coordinator" 
+              asp-action="Search" 
+              method="post" 
+              class="row g-3 align-items-center">
+
+            <div class="col-md-9">
+                <input asp-for="StudentName" 
+                       class="form-control rounded-0 border-dark py-2" 
+                       placeholder="Typ de voornaam of achternaam van een student..." />
+            </div>
+        
+            <div class="col-md-3">
+                <button type="submit" class="btn card-button-badge c-blue text-uppercase fw-bold rounded-0 w-100">
+                    Zoeken
+                </button>
+            </div>
+        </form>
+    </div>
+
+    @if (Model.Results != null)
+    {
+        <div class="card-field rounded-0 p-4 p-md-5">
+            <h5 class="fw-bold mb-4 text-uppercase">Zoekresultaten</h5>
+
+            @if (!Model.Results.Any())
+            {
+                <div class="alert card-field c-red text-uppercase fw-bolder rounded-0 m-0">
+                    Geen studenten gevonden met deze zoekterm.
+                </div>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover align-middle card-cel">
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col">Student</th>
+                                <th scope="col">E-mail</th>
+                                <th scope="col">Telefoon</th>
+                                <th scope="col">Organisatie</th>
+                                <th scope="col">Periode</th>
+                                <th scope="col">Actie</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var student in Model.Results)
+                            {
+                                <tr class="form-tr">
+                                    <td class="fw-bold">@student.StudentName</td>
+                                    <td>@student.StudentEmail</td>
+                                    <td>@student.StudentTelephoneNumber</td>
+                                    <td>@student.StudentRepresentedOrganisation</td>
+                                    <td>
+                                        <small>
+                                            @student.StartDate.ToString("dd/MM/yyyy") - @student.EndDate.ToString("dd/MM/yyyy")
+                                        </small>
+                                    </td>
+                                    <td>
+                                        <a asp-area="Coordinator" 
+                                           asp-controller="Coordinator" 
+                                           asp-action="ViewStudentContract" 
+                                           asp-route-id="@student.ContractId" 
+                                           class="card-button-badge c-blue text-decoration-none text-black">
+                                            Bekijk contract
+                                        </a>
+                                        <a asp-area="Coordinator" 
+                                           asp-controller="Coordinator" 
+                                           asp-action="EditStudentContract" 
+                                           asp-route-id="@student.ContractId" 
+                                           class="card-button-badge c-blue text-decoration-none text-black mx-1">
+                                            Wijzig contract
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    }
+</div>
